@@ -115,8 +115,8 @@ function drawBoard() {
             }
             ctx.fillStyle = color;
             ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-            ctx.strokeStyle = '#ddd';
-            ctx.lineWidth = 0.3;
+            ctx.strokeStyle = '#999';
+            ctx.lineWidth = 0.5;
             ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
         }
     }

@@ -94,7 +94,7 @@ button:disabled {
 }
 
 #board {
-    border: 1px solid #ddd;
+    border: 1px solid #999;
     width: min(90vmin, 500px);
     height: min(90vmin, 500px);
     aspect-ratio: 1;
