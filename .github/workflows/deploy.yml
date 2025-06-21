@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: ["**"]
 
 permissions:
   contents: read
@@ -19,10 +19,21 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Prepare deployment content
+        run: |
+          BRANCH_NAME=${GITHUB_REF_NAME}
+          if [ "$BRANCH_NAME" = "main" ]; then
+            DEST=build
+          else
+            DEST=build/preview/$BRANCH_NAME
+            mkdir -p "$DEST"
+          fi
+          rsync -a --exclude=build ./ "$DEST"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: build
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
