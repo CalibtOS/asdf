@@ -45,6 +45,10 @@ button .icon {
     button .text {
         display: none;
     }
+    button {
+        width: 36px;
+        height: 36px;
+    }
 }
 
 body {
@@ -74,8 +78,6 @@ button {
     background: var(--accent);
     color: white;
     cursor: pointer;
-    width: 36px;
-    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
