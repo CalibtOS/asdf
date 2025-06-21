@@ -92,6 +92,14 @@ function borderColor() {
     return getComputedStyle(document.body).getPropertyValue('--border').trim();
 }
 
+function emptyColor() {
+    return getComputedStyle(document.body).getPropertyValue('--cell-empty').trim();
+}
+
+function corpseColor() {
+    return getComputedStyle(document.body).getPropertyValue('--cell-corpse').trim();
+}
+
 function applyTheme(dark) {
     document.body.classList.toggle('dark', dark);
     if (dark) {
@@ -110,6 +118,7 @@ applyTheme(prefersDark);
 
 themeBtn.addEventListener('click', () => {
     applyTheme(!document.body.classList.contains('dark'));
+    drawBoard();
 });
 
 let interval = 200;
@@ -125,9 +134,11 @@ function resizeCanvas() {
 
 function drawBoard() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const empty = emptyColor();
+    const corpse = corpseColor();
     for (let y = 0; y < game.rows; y++) {
         for (let x = 0; x < game.cols; x++) {
-            let color = '#fff';
+            let color = empty;
             const current = game.board[y][x];
             const previous = game.lastBoard ? game.lastBoard[y][x] : 0;
             const next = game.futureBoard[y][x];
@@ -140,7 +151,7 @@ function drawBoard() {
                     color = 'green'; // surviving
                 }
             } else if (previous) {
-                color = '#555'; // corpse
+                color = corpse; // corpse
             }
             ctx.fillStyle = color;
             ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
