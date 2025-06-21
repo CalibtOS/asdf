@@ -2,6 +2,51 @@
     --accent: #4f46e5;
 }
 
+#controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.buttons,
+.settings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings {
+    width: 100%;
+}
+
+.settings input[type="range"] {
+    flex-grow: 1;
+    max-width: 200px;
+}
+
+button .icon {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .buttons {
+        gap: 2px;
+    }
+    .settings label.text {
+        display: none;
+    }
+    button .icon {
+        display: inline;
+    }
+    button .text {
+        display: none;
+    }
+}
+
 body {
     font-family: system-ui, sans-serif;
     margin: 0;
@@ -11,19 +56,6 @@ body {
     align-items: center;
 }
 
-#controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-@media (max-width: 600px) {
-    #controls {
-        gap: 2px;
-    }
-}
 
 button,
 input[type="number"],
@@ -87,4 +119,21 @@ button:disabled {
     padding: 20px;
     border-radius: 8px;
     max-width: 90%;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 50%;
+    background: red;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
 }
