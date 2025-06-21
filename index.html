@@ -14,10 +14,31 @@
         <button id="step">Step</button>
         <label for="speed">Speed:</label>
         <input type="range" id="speed" min="50" max="1000" step="50" value="200">
+        <label for="rows">Rows:</label>
+        <input type="number" id="rows" min="10" max="200" value="100">
+        <label for="cols">Cols:</label>
+        <input type="number" id="cols" min="10" max="200" value="100">
         <button id="clear">Clear</button>
         <button id="random">Random</button>
+        <button id="export">Export</button>
+        <button id="import">Import</button>
+        <button id="info">Info</button>
     </div>
     <canvas id="board" width="500" height="500"></canvas>
+    <div id="overlay" class="hidden">
+        <div class="modal">
+            <h2>Conway's Game of Life</h2>
+            <p>The universe of the Game of Life is an infinite grid of cells. Each cell has two states: alive or dead. At each step in time the following transitions occur:</p>
+            <ul>
+                <li>A live cell with fewer than two live neighbours dies.</li>
+                <li>A live cell with two or three live neighbours lives on.</li>
+                <li>A live cell with more than three live neighbours dies.</li>
+                <li>A dead cell with exactly three live neighbours becomes a live cell.</li>
+            </ul>
+            <button id="close">Close</button>
+        </div>
+    </div>
+    <input type="file" id="fileInput" accept="application/json" style="display:none">
     <script src="script.js"></script>
 </body>
 </html>
