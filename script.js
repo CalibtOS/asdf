@@ -2,9 +2,10 @@ const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
 const size = 100; // grid size
 const cellSize = canvas.width / size;
-let running = false;
 let board = createBoard();
 let nextBoard = createBoard();
+let timer = null;
+let interval = 200; // ms per generation
 
 function createBoard() {
     const arr = new Array(size);
@@ -50,11 +51,25 @@ function computeNext() {
     [board, nextBoard] = [nextBoard, board];
 }
 
-function step() {
-    if (!running) return;
+function startGame() {
+    if (!timer) {
+        timer = setInterval(() => {
+            computeNext();
+            drawBoard();
+        }, interval);
+    }
+}
+
+function stopGame() {
+    if (timer) {
+        clearInterval(timer);
+        timer = null;
+    }
+}
+
+function stepOnce() {
     computeNext();
     drawBoard();
-    requestAnimationFrame(step);
 }
 
 canvas.addEventListener('click', (e) => {
@@ -65,19 +80,12 @@ canvas.addEventListener('click', (e) => {
     drawBoard();
 });
 
-document.getElementById('start').addEventListener('click', () => {
-    if (!running) {
-        running = true;
-        requestAnimationFrame(step);
-    }
-});
-
-document.getElementById('stop').addEventListener('click', () => {
-    running = false;
-});
+document.getElementById('start').addEventListener('click', startGame);
+document.getElementById('stop').addEventListener('click', stopGame);
+document.getElementById('step').addEventListener('click', stepOnce);
 
 document.getElementById('clear').addEventListener('click', () => {
-    running = false;
+    stopGame();
     board = createBoard();
     drawBoard();
 });
@@ -89,6 +97,14 @@ document.getElementById('random').addEventListener('click', () => {
         }
     }
     drawBoard();
+});
+
+document.getElementById('speed').addEventListener('input', (e) => {
+    interval = Number(e.target.value);
+    if (timer) {
+        stopGame();
+        startGame();
+    }
 });
 
 drawBoard();

@@ -23,4 +23,14 @@ A GitHub Actions workflow is included to automatically deploy the site to GitHub
 3. The next push to `main` will trigger the workflow, creating the `gh-pages` branch with the built site.
 4. After the workflow completes, the game will be available at `https://<username>.github.io/<repo>/`.
 
+### Controls
+
+The interface provides the following controls:
+
+* **Start** / **Stop** – begin or pause continuous simulation.
+* **Step** – advance the game by a single generation.
+* **Speed** – slider that changes how quickly generations update.
+* **Clear** – reset the board to all dead cells.
+* **Random** – populate the board with a random pattern.
+
 If you have already performed the manual steps, let me know and I can continue with any further automation.
