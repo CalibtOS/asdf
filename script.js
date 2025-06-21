@@ -1,7 +1,9 @@
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
-let rows = 100;
-let cols = 100;
+const overlay = document.getElementById('overlay');
+const closeBtn = document.getElementById('close');
+let rows = 50;
+let cols = 50;
 let cellSize = canvas.width / cols;
 let board = createBoard();
 let nextBoard = createBoard();
@@ -155,11 +157,17 @@ document.getElementById('fileInput').addEventListener('change', (e) => {
 });
 
 document.getElementById('info').addEventListener('click', () => {
-    document.getElementById('overlay').classList.remove('hidden');
+    overlay.classList.remove('hidden');
 });
 
-document.getElementById('close').addEventListener('click', () => {
-    document.getElementById('overlay').classList.add('hidden');
+closeBtn.addEventListener('click', () => {
+    overlay.classList.add('hidden');
+});
+
+overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+        overlay.classList.add('hidden');
+    }
 });
 
 document.getElementById('speed').addEventListener('input', (e) => {
