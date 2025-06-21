@@ -1,6 +1,6 @@
 # Conway's Game of Life
 
-This repository contains a responsive implementation of Conway's Game of Life that can be hosted using GitHub Pages. The game runs entirely client side and requires no additional dependencies. The interface adapts to mobile screens and supports saving/loading patterns.
+This repository contains a responsive implementation of Conway's Game of Life that can be hosted using GitHub Pages. The game runs entirely client side and requires no additional dependencies. The interface adapts to mobile screens, follows your system color scheme, and supports saving/loading patterns.
 
 ## Running locally
 
@@ -27,7 +27,7 @@ A GitHub Actions workflow automatically deploys the site to GitHub Pages.  Pushe
 
 The interface provides the following controls:
 
-* **Start** / **Stop** – begin or pause continuous simulation.
+* **Play** – toggles between start and stop for continuous simulation.
 * **Step** – advance the game by a single generation.
 * **Back** – revert to the previous generation (available only one step back).
 * **Speed** – slider that changes how quickly generations update.
@@ -36,6 +36,7 @@ The interface provides the following controls:
 * **Random** – populate the board with a random pattern.
 * **Export / Import** – save and load board state as JSON.
 * **Info** – open a dialog describing the rules.
+* **Theme** – toggle between light and dark mode.
 
 Cells are color-coded for clarity: new births appear **blue**, surviving cells **green**, those that will die next generation **red**, and recently dead cells fade out in **gray**.
 

@@ -1,5 +1,14 @@
 :root {
     --accent: #4f46e5;
+    --bg: #ffffff;
+    --fg: #000000;
+    --border: #999;
+}
+
+body.dark {
+    --bg: #1e1e1e;
+    --fg: #f5f5f5;
+    --border: #666;
 }
 
 #controls {
@@ -28,9 +37,7 @@
     max-width: 200px;
 }
 
-button .icon {
-    display: none;
-}
+
 
 @media (max-width: 600px) {
     .buttons {
@@ -38,9 +45,6 @@ button .icon {
     }
     .settings label.text {
         display: none;
-    }
-    button .icon {
-        display: inline;
     }
     button .text {
         display: none;
@@ -58,6 +62,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: var(--bg);
+    color: var(--fg);
 }
 
 
@@ -94,7 +100,7 @@ button:disabled {
 }
 
 #board {
-    border: 1px solid #999;
+    border: 1px solid var(--border);
     width: min(90vmin, 500px);
     height: min(90vmin, 500px);
     aspect-ratio: 1;
@@ -138,4 +144,22 @@ button:disabled {
     cursor: pointer;
     line-height: 1;
     padding: 0;
+}
+
+#play {
+    background: green;
+}
+
+#play.playing {
+    background: red;
+}
+
+#theme.light {
+    background: black;
+    color: white;
+}
+
+#theme.dark {
+    background: white;
+    color: #fbbf24;
 }

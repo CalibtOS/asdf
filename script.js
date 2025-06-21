@@ -82,6 +82,35 @@ ctx.imageSmoothingEnabled = false;
 const overlay = document.getElementById('overlay');
 const closeBtn = document.getElementById('close');
 const backBtn = document.getElementById('back');
+const playBtn = document.getElementById('play');
+const playIcon = playBtn.querySelector('.icon');
+const playText = playBtn.querySelector('.text');
+const themeBtn = document.getElementById('theme');
+const themeIcon = themeBtn.querySelector('.icon');
+
+function borderColor() {
+    return getComputedStyle(document.body).getPropertyValue('--border').trim();
+}
+
+function applyTheme(dark) {
+    document.body.classList.toggle('dark', dark);
+    if (dark) {
+        themeBtn.classList.remove('light');
+        themeBtn.classList.add('dark');
+        themeIcon.textContent = '☀️';
+    } else {
+        themeBtn.classList.remove('dark');
+        themeBtn.classList.add('light');
+        themeIcon.textContent = '🌙';
+    }
+}
+
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+applyTheme(prefersDark);
+
+themeBtn.addEventListener('click', () => {
+    applyTheme(!document.body.classList.contains('dark'));
+});
 
 let interval = 200;
 let timer = null;
@@ -115,7 +144,7 @@ function drawBoard() {
             }
             ctx.fillStyle = color;
             ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-            ctx.strokeStyle = '#999';
+            ctx.strokeStyle = borderColor();
             ctx.lineWidth = 0.5;
             ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
         }
@@ -147,6 +176,20 @@ function backOnce() {
     }
 }
 
+function updatePlayButton() {
+    if (timer) {
+        playBtn.classList.add('playing');
+        playIcon.textContent = '■';
+        playText.textContent = 'Stop';
+        playBtn.title = 'Stop';
+    } else {
+        playBtn.classList.remove('playing');
+        playIcon.textContent = '▶';
+        playText.textContent = 'Play';
+        playBtn.title = 'Play';
+    }
+}
+
 function startGame() {
     if (!timer) {
         timer = setInterval(() => {
@@ -154,6 +197,7 @@ function startGame() {
             drawBoard();
         }, interval);
         backBtn.disabled = true;
+        updatePlayButton();
     }
 }
 
@@ -162,6 +206,7 @@ function stopGame() {
         clearInterval(timer);
         timer = null;
         backBtn.disabled = !game.lastBoard;
+        updatePlayButton();
     }
 }
 
@@ -177,8 +222,13 @@ canvas.addEventListener('click', e => {
 document.getElementById('rows').addEventListener('change', initBoard);
 document.getElementById('cols').addEventListener('change', initBoard);
 
-document.getElementById('start').addEventListener('click', startGame);
-document.getElementById('stop').addEventListener('click', stopGame);
+playBtn.addEventListener('click', () => {
+    if (timer) {
+        stopGame();
+    } else {
+        startGame();
+    }
+});
 document.getElementById('step').addEventListener('click', stepOnce);
 backBtn.addEventListener('click', backOnce);
 
@@ -257,3 +307,4 @@ window.addEventListener('resize', () => {
 });
 
 initBoard();
+updatePlayButton();
