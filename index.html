@@ -9,21 +9,21 @@
 <body>
     <h1>Conway's Game of Life</h1>
     <div id="controls">
-        <button id="start">Start</button>
-        <button id="stop">Stop</button>
-        <button id="step">Step</button>
-        <button id="back" disabled>Back</button>
-        <label for="speed">Speed:</label>
+        <button id="start" title="Start">▶</button>
+        <button id="stop" title="Stop">■</button>
+        <button id="step" title="Step">⏭</button>
+        <button id="back" title="Back" disabled>⏮</button>
+        <label for="speed" title="Speed">⚡</label>
         <input type="range" id="speed" min="50" max="1000" step="50" value="200">
-        <label for="rows">Rows:</label>
+        <label for="rows" title="Rows">R</label>
         <input type="number" id="rows" min="10" max="200" value="50">
-        <label for="cols">Cols:</label>
+        <label for="cols" title="Cols">C</label>
         <input type="number" id="cols" min="10" max="200" value="50">
-        <button id="clear">Clear</button>
-        <button id="random">Random</button>
-        <button id="export">Export</button>
-        <button id="import">Import</button>
-        <button id="info">Info</button>
+        <button id="clear" title="Clear">⌧</button>
+        <button id="random" title="Random">🎲</button>
+        <button id="export" title="Export">⇩</button>
+        <button id="import" title="Import">⇧</button>
+        <button id="info" title="Info">ℹ️</button>
     </div>
     <canvas id="board" width="500" height="500"></canvas>
     <div id="overlay" class="hidden">

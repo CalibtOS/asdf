@@ -115,12 +115,16 @@ function drawBoard() {
             }
             ctx.fillStyle = color;
             ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-            ctx.strokeStyle = '#bbb';
-            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 0.3;
             ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
         }
     }
-    backBtn.disabled = !game.lastBoard;
+    if (timer) {
+        backBtn.disabled = true;
+    } else {
+        backBtn.disabled = !game.lastBoard;
+    }
 }
 
 function initBoard() {
@@ -139,6 +143,7 @@ function stepOnce() {
 function backOnce() {
     if (game.back()) {
         drawBoard();
+        backBtn.disabled = true;
     }
 }
 
