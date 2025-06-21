@@ -58,7 +58,7 @@ button:hover {
     align-items: center;
 }
 
-.hidden {
+#overlay.hidden {
     display: none;
 }
 
