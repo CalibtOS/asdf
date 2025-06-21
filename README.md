@@ -29,11 +29,14 @@ The interface provides the following controls:
 
 * **Start** / **Stop** – begin or pause continuous simulation.
 * **Step** – advance the game by a single generation.
+* **Back** – revert to the previous generation (available only one step back).
 * **Speed** – slider that changes how quickly generations update.
 * **Rows / Cols** – set the grid dimensions.
 * **Clear** – reset the board to all dead cells.
 * **Random** – populate the board with a random pattern.
 * **Export / Import** – save and load board state as JSON.
 * **Info** – open a dialog describing the rules.
+
+Cells are color-coded for clarity: new births appear **blue**, surviving cells **green**, those that will die next generation **red**, and recently dead cells fade out in **gray**.
 
 If you have already performed the manual steps, let me know and I can continue with any further automation.
