@@ -27,7 +27,7 @@ body.dark {
 .settings {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 8px;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -42,6 +42,20 @@ body.dark {
     width: 100%;
 }
 
+.speed-control {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.size-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
 .settings input[type="range"] {
     flex-grow: 1;
     max-width: 200px;
@@ -49,28 +63,326 @@ body.dark {
 
 
 
-@media (max-width: 600px) {
-    .buttons {
-        display: grid;
-        gap: 2px;
-        grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
-        grid-auto-rows: 36px;
-        grid-auto-flow: row dense;
-        width: 100%;
-    }
-    .step-back {
-        grid-column: span 2;
-        gap: 2px;
-    }
-    .settings label.text {
-        display: none;
-    }
+/* Burger menu styles */
+.burger-menu {
+    position: relative;
+    z-index: 1001;
+    display: none;
+    flex-shrink: 0;
+}
+
+.burger-btn {
+    width: 40px;
+    height: 40px;
+    background: var(--accent);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.burger-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.burger-btn span {
+    width: 20px;
+    height: 2px;
+    background: white;
+    transition: all 0.3s ease;
+    border-radius: 1px;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: center;
+    margin-left: -10px;
+}
+
+.burger-btn span:nth-child(1) {
+    transform: translateY(-8px);
+}
+
+.burger-btn span:nth-child(2) {
+    transform: translateY(0);
+}
+
+.burger-btn span:nth-child(3) {
+    transform: translateY(8px);
+}
+
+.burger-btn.active span:nth-child(1) {
+    transform: rotate(45deg);
+    height: 3px;
+}
+
+.burger-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-btn.active span:nth-child(3) {
+    transform: rotate(-45deg);
+    height: 3px;
+}
+
+.burger-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1900;
+    width: 180px;
+    display: none;
+    overflow: hidden;
+    padding: 0;
+}
+
+.burger-dropdown.show {
+    display: block;
+}
+
+.burger-dropdown button {
+    width: 100% !important;
+    background: transparent;
+    color: var(--fg);
+    border: none !important;
+    padding: 12px 16px !important;
+    margin: 0 !important;
+    text-align: left;
+    cursor: pointer;
+    display: block !important;
+    font-size: 14px !important;
+    white-space: nowrap;
+    box-sizing: border-box !important;
+    outline: none;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    flex: none !important;
+    line-height: 1.2;
+}
+
+.burger-dropdown button:hover {
+    background: var(--accent);
+    color: white;
+}
+
+.burger-dropdown button:first-child {
+    border-radius: 8px 8px 0 0;
+}
+
+.burger-dropdown button:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+/* Ensure dynamic backgrounds respect rounded corners */
+#burger-play:first-child,
+#burger-theme:first-child {
+    border-radius: 8px 8px 0 0 !important;
+}
+
+#burger-play:last-child,
+#burger-theme:last-child {
+    border-radius: 0 0 8px 8px !important;
+}
+
+#burger-play:only-child,
+#burger-theme:only-child {
+    border-radius: 8px !important;
+}
+
+.burger-dropdown button .icon {
+    display: inline-block;
+    width: 20px;
+    margin-right: 10px;
+    text-align: center;
+    vertical-align: baseline;
+    line-height: 1;
+}
+
+/* Burger menu dynamic button colors */
+#burger-play {
+    background: green !important;
+    color: white !important;
+    width: 100% !important;
+    display: block !important;
+}
+
+#burger-play.playing {
+    background: red !important;
+    color: white !important;
+    width: 100% !important;
+    display: block !important;
+}
+
+#burger-play:hover {
+    background: green !important;
+    opacity: 0.8;
+}
+
+#burger-play.playing:hover {
+    background: red !important;
+    opacity: 0.8;
+}
+
+#burger-theme.light {
+    background: black !important;
+    color: white !important;
+    width: 100% !important;
+    display: block !important;
+}
+
+#burger-theme.dark {
+    background: white !important;
+    color: black !important;
+    width: 100% !important;
+    display: block !important;
+}
+
+#burger-theme:hover {
+    opacity: 0.8;
+}
+
+/* Medium screens: Hide button text, show icons only */
+@media (max-width: 900px) {
     button .text {
         display: none;
     }
-    button {
-        width: 36px;
-        height: 36px;
+    
+    button:not(.close-btn) {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        max-width: 40px;
+        box-sizing: border-box;
+    }
+    
+    button .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+    }
+    
+    .step-back {
+        gap: 4px;
+    }
+    
+    .step-back button {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .settings label.text {
+        display: none;
+    }
+}
+
+/* Small screens: Show burger menu only */
+@media (max-width: 500px) {
+    .buttons {
+        justify-content: center;
+    }
+    
+    .burger-menu {
+        display: block;
+    }
+    
+    .buttons > button:not(.burger-btn),
+    .buttons > .step-back {
+        display: none;
+    }
+    
+    .settings label.text {
+        display: none;
+    }
+    
+    /* Adjust controls margin */
+    #controls {
+        margin-top: 0;
+    }
+    
+    /* Create a simple top row with button and title */
+    .top-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px;
+        margin-bottom: 10px;
+    }
+    
+    .top-row h1 {
+        font-size: 1.2rem;
+        margin: 0;
+        white-space: nowrap;
+        flex: 1;
+    }
+    
+    .top-row .burger-menu {
+        display: block;
+    }
+    
+    /* Hide regular title on small screens */
+    body > h1 {
+        display: none;
+    }
+}
+
+/* Scale down everything on very small screens */
+@media (max-width: 320px) {
+    .top-row {
+        font-size: 0.9rem;
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .top-row .burger-btn {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .settings input[type="number"] {
+        width: 2.5rem;
+        font-size: 12px;
+    }
+    
+    .settings {
+        gap: 6px;
+    }
+}
+
+@media (max-width: 280px) {
+    .top-row {
+        font-size: 0.8rem;
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .top-row .burger-btn {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .settings input[type="number"] {
+        width: 2rem;
+        font-size: 11px;
     }
 }
 
@@ -85,14 +397,46 @@ body {
     color: var(--fg);
 }
 
+h1 {
+    font-size: 2rem;
+    white-space: nowrap;
+    margin: 0.5rem 0;
+    text-align: center;
+    display: block;
+}
+
+/* Large screens: Show regular title, hide top row */
+@media (min-width: 501px) {
+    .top-row {
+        display: none !important;
+    }
+    
+    /* Show regular title */
+    body > h1 {
+        display: block !important;
+        margin: 1rem 0 !important;
+        font-size: 2rem !important;
+        text-align: center !important;
+    }
+    
+    #controls {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+}
+
+/* These old responsive font sizes are no longer needed since we handle title differently */
+
 
 button,
 input[type="number"],
 input[type="range"] {
     padding: 4px 6px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border);
     border-radius: 4px;
     font-size: 14px;
+    background: var(--bg);
+    color: var(--fg);
 }
 
 input[type="number"] {
@@ -135,6 +479,7 @@ button:disabled {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 2000;
 }
 
 #overlay.hidden {
@@ -142,7 +487,8 @@ button:disabled {
 }
 
 .modal {
-    background: white;
+    background: var(--bg);
+    color: var(--fg);
     padding: 20px;
     border-radius: 8px;
     max-width: 90%;
@@ -161,8 +507,12 @@ button:disabled {
     color: white;
     font-weight: bold;
     cursor: pointer;
-    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 0;
+    font-size: 12px;
+    transform: translateY(-0.5px);
 }
 
 #play {
