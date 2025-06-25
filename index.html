@@ -8,6 +8,27 @@
 </head>
 <body>
     <h1>Conway's Game of Life</h1>
+    <div class="top-row">
+        <div class="burger-menu">
+            <button class="burger-btn" id="burger-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="burger-dropdown" id="burger-dropdown">
+                <button id="burger-play"><span class="icon">▶</span> Play</button>
+                <button id="burger-step"><span class="icon">⏭</span> Step</button>
+                <button id="burger-back"><span class="icon">⏮</span> Back</button>
+                <button id="burger-clear"><span class="icon">⌧</span> Clear</button>
+                <button id="burger-random"><span class="icon">🎲</span> Random</button>
+                <button id="burger-export"><span class="icon">⇩</span> Export</button>
+                <button id="burger-import"><span class="icon">⇧</span> Import</button>
+                <button id="burger-info"><span class="icon">ℹ️</span> Info</button>
+                <button id="burger-theme"><span class="icon">🌙</span> Theme</button>
+            </div>
+        </div>
+        <h1>Conway's Game of Life</h1>
+    </div>
     <div id="controls">
         <div class="buttons">
             <button id="play" title="Play"><span class="icon">▶</span><span class="text">Play</span></button>
@@ -23,12 +44,16 @@
             <button id="theme" title="Toggle theme"><span class="icon">🌙</span><span class="text">Theme</span></button>
         </div>
         <div class="settings">
-            <label for="speed" class="text">Speed:</label>
-            <input type="range" id="speed" min="50" max="1000" step="50" value="200">
-            <label for="rows" class="text">Rows:</label>
-            <input type="number" id="rows" min="10" max="200" value="50">
-            <label for="cols" class="text">Cols:</label>
-            <input type="number" id="cols" min="10" max="200" value="50">
+            <div class="speed-control">
+                <label for="speed" class="text">Speed:</label>
+                <input type="range" id="speed" min="50" max="1000" step="50" value="200">
+            </div>
+            <div class="size-controls">
+                <label for="rows" class="text">Rows:</label>
+                <input type="number" id="rows" min="10" max="200" value="50">
+                <label for="cols" class="text">Cols:</label>
+                <input type="number" id="cols" min="10" max="200" value="50">
+            </div>
         </div>
     </div>
     <canvas id="board" width="500" height="500"></canvas>

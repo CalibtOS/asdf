@@ -88,6 +88,10 @@ const playText = playBtn.querySelector('.text');
 const themeBtn = document.getElementById('theme');
 const themeIcon = themeBtn.querySelector('.icon');
 
+// Burger menu elements
+const burgerToggle = document.getElementById('burger-toggle');
+const burgerDropdown = document.getElementById('burger-dropdown');
+
 function borderColor() {
     return getComputedStyle(document.body).getPropertyValue('--border').trim();
 }
@@ -102,14 +106,23 @@ function corpseColor() {
 
 function applyTheme(dark) {
     document.body.classList.toggle('dark', dark);
+    const burgerTheme = document.getElementById('burger-theme');
     if (dark) {
         themeBtn.classList.remove('light');
         themeBtn.classList.add('dark');
         themeIcon.textContent = '☀️';
+        // Update burger menu theme button
+        burgerTheme.innerHTML = '<span class="icon">☀️</span> Theme';
+        burgerTheme.classList.remove('light');
+        burgerTheme.classList.add('dark');
     } else {
         themeBtn.classList.remove('dark');
         themeBtn.classList.add('light');
         themeIcon.textContent = '🌙';
+        // Update burger menu theme button
+        burgerTheme.innerHTML = '<span class="icon">🌙</span> Theme';
+        burgerTheme.classList.remove('dark');
+        burgerTheme.classList.add('light');
     }
 }
 
@@ -165,6 +178,7 @@ function drawBoard() {
     } else {
         backBtn.disabled = !game.lastBoard;
     }
+    updateBurgerBackButton();
 }
 
 function initBoard() {
@@ -188,16 +202,34 @@ function backOnce() {
 }
 
 function updatePlayButton() {
+    const burgerPlay = document.getElementById('burger-play');
     if (timer) {
         playBtn.classList.add('playing');
         playIcon.textContent = '■';
         playText.textContent = 'Stop';
         playBtn.title = 'Stop';
+        // Update burger menu play button
+        burgerPlay.innerHTML = '<span class="icon">■</span> Stop';
+        burgerPlay.classList.add('playing');
     } else {
         playBtn.classList.remove('playing');
         playIcon.textContent = '▶';
         playText.textContent = 'Play';
         playBtn.title = 'Play';
+        // Update burger menu play button
+        burgerPlay.innerHTML = '<span class="icon">▶</span> Play';
+        burgerPlay.classList.remove('playing');
+    }
+}
+
+function updateBurgerBackButton() {
+    const burgerBack = document.getElementById('burger-back');
+    if (timer || !game.lastBoard) {
+        burgerBack.disabled = true;
+        burgerBack.style.opacity = '0.5';
+    } else {
+        burgerBack.disabled = false;
+        burgerBack.style.opacity = '1';
     }
 }
 
@@ -209,6 +241,7 @@ function startGame() {
         }, interval);
         backBtn.disabled = true;
         updatePlayButton();
+        updateBurgerBackButton();
     }
 }
 
@@ -218,6 +251,7 @@ function stopGame() {
         timer = null;
         backBtn.disabled = !game.lastBoard;
         updatePlayButton();
+        updateBurgerBackButton();
     }
 }
 
@@ -317,5 +351,87 @@ window.addEventListener('resize', () => {
     drawBoard();
 });
 
+// Burger menu functionality
+burgerToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    burgerToggle.classList.toggle('active');
+    burgerDropdown.classList.toggle('show');
+});
+
+// Close burger menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!burgerDropdown.contains(e.target) && !burgerToggle.contains(e.target)) {
+        burgerToggle.classList.remove('active');
+        burgerDropdown.classList.remove('show');
+    }
+});
+
+// Burger menu item event listeners
+document.getElementById('burger-play').addEventListener('click', () => {
+    if (timer) stopGame(); else startGame();
+    burgerToggle.classList.remove('active');
+    burgerDropdown.classList.remove('show');
+});
+
+document.getElementById('burger-step').addEventListener('click', () => {
+    stepOnce();
+    burgerToggle.classList.remove('active');
+    burgerDropdown.classList.remove('show');
+});
+
+document.getElementById('burger-back').addEventListener('click', () => {
+    backOnce();
+    burgerToggle.classList.remove('active');
+    burgerDropdown.classList.remove('show');
+});
+
+document.getElementById('burger-clear').addEventListener('click', () => {
+    stopGame();
+    game.clear();
+    drawBoard();
+    burgerToggle.classList.remove('active');
+    burgerDropdown.classList.remove('show');
+});
+
+document.getElementById('burger-random').addEventListener('click', () => {
+    game.randomize();
+    drawBoard();
+    burgerToggle.classList.remove('active');
+    burgerDropdown.classList.remove('show');
+});
+
+document.getElementById('burger-export').addEventListener('click', () => {
+    const data = JSON.stringify({ rows: game.rows, cols: game.cols, board: game.board });
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'game-of-life.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    burgerToggle.classList.remove('active');
+    burgerDropdown.classList.remove('show');
+});
+
+document.getElementById('burger-import').addEventListener('click', () => {
+    document.getElementById('fileInput').click();
+    burgerToggle.classList.remove('active');
+    burgerDropdown.classList.remove('show');
+});
+
+document.getElementById('burger-info').addEventListener('click', () => {
+    overlay.classList.remove('hidden');
+    burgerToggle.classList.remove('active');
+    burgerDropdown.classList.remove('show');
+});
+
+document.getElementById('burger-theme').addEventListener('click', () => {
+    applyTheme(!document.body.classList.contains('dark'));
+    drawBoard();
+    burgerToggle.classList.remove('active');
+    burgerDropdown.classList.remove('show');
+});
+
 initBoard();
 updatePlayButton();
+updateBurgerBackButton();
