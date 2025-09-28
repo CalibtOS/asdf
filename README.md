@@ -29,7 +29,7 @@ The interface provides the following controls:
 
 * **Play** – toggles between start and stop for continuous simulation.
 * **Step** – advance the game by a single generation.
-* **Back** – revert to the previous generation (available only one step back).
+* **Back** – revert to the previous generation (available only one step back). Does not automatically pause the game, should only be used in paused state.
 * **Speed** – slider that changes how quickly generations update.
 * **Rows / Cols** – set the grid dimensions.
 * **Clear** – reset the board to all dead cells.
